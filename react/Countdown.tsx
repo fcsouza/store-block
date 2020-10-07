@@ -3,6 +3,12 @@ import { useCssHandles } from 'vtex.css-handles'
 import { TimeSplit } from './typings/global'
 import { tick, getTwoDaysFromNow } from './utils/time'
 
+import { useQuery } from 'react-apollo'
+
+import useProduct from 'vtex.product-context/useProduct'
+
+import productReleaseDate from './queries/productReleaseDate.graphql'
+
 const titleText = title || <FormattedMessage id="countdown.title" />
 const DEFAULT_TARGET_DATE = getTwoDaysFromNow();
 const CSS_HANDLES = ["countdown"]
@@ -19,7 +25,7 @@ const Countdown: StorefrontFunctionComponent<CountdownProps> = ({ targetDate = D
 
   const handles = useCssHandles(CSS_HANDLES)
 
-  tick(targetDate, setTime)
+  tick(data?.product?.releaseDate, setTime)
 
   return (
     <div className={`${handles.countdown} db tc`}>
